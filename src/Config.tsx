@@ -17,13 +17,12 @@ const App = () => {
     const data: Message = [];
     for (let i = 0; i < NUMBER_OF_TEAMS; i++) {
       const name = (evt.target as any)[`name_${i + 1}`].value;
+      const time = (evt.target as any)[`time_${i + 1}`].value;
       const score = parseInt((evt.target as any)[`score_${i + 1}`].value);
-
-      console.log(name, score);
 
       if (!name || !score) continue;
 
-      data.push({ name, score });
+      data.push({ name, score, time });
 
       localStorage.setItem("data", JSON.stringify(data));
     }
@@ -55,8 +54,6 @@ const App = () => {
               console.warn("Input not found", i);
               continue;
             }
-
-            console.log(nameInput, scoreInput);
 
             nameInput.value = parsedData[i].name;
             scoreInput.value = parsedData[i].score;
@@ -90,7 +87,13 @@ const App = () => {
               id={`name_${i + 1}`}
               name={`name_${i + 1}`}
               placeholder="Institute Name"
-              w={"75%"}
+              w={"50%"}
+            />
+            <Input
+              id={`time_${i + 1}`}
+              name={`time_${i + 1}`}
+              placeholder="Elapsed Time"
+              w={"25%"}
             />
             <Input
               id={`score_${i + 1}`}

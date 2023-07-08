@@ -27,9 +27,9 @@ const App = () => {
     <Container>
       <Text fontSize={"2xl"}>Leaderboard</Text>
 
-      {data.map(({ name, score }, i) => (
+      {data.map(({ name, score, time }, i) => (
         <Text key={i}>
-          {i + 1}. {name} - {score}
+          {i + 1}. {name} - {score} - {time}
         </Text>
       ))}
     </Container>
