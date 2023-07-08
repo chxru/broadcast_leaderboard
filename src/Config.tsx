@@ -6,8 +6,11 @@
 import { Button, Container, HStack, Input, Text } from "@chakra-ui/react";
 import { bc } from "./broadcast";
 import { Message, NUMBER_OF_TEAMS } from "./types";
+import { useEffect, useRef } from "react";
 
 const App = () => {
+  const initialized = useRef(false);
+
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
@@ -21,6 +24,8 @@ const App = () => {
       if (!name || !score) continue;
 
       data.push({ name, score });
+
+      localStorage.setItem("data", JSON.stringify(data));
     }
 
     console.log(data);
@@ -28,14 +33,55 @@ const App = () => {
     bc.postMessage(data);
   };
 
+  useEffect(() => {
+    if (!initialized.current) {
+      const data = localStorage.getItem("data");
+      if (data) {
+        const parsedData = JSON.parse(data);
+        console.log(parsedData);
+
+        // check if data is valid
+        if (Array.isArray(parsedData)) {
+          // set data
+          for (let i = 0; i < parsedData.length; i++) {
+            const nameInput = document.getElementById(
+              `name_${i + 1}`
+            ) as HTMLInputElement;
+            const scoreInput = document.getElementById(
+              `score_${i + 1}`
+            ) as HTMLInputElement;
+
+            if (!nameInput || !scoreInput) {
+              console.warn("Input not found", i);
+              continue;
+            }
+
+            console.log(nameInput, scoreInput);
+
+            nameInput.value = parsedData[i].name;
+            scoreInput.value = parsedData[i].score;
+          }
+
+          bc.postMessage(parsedData);
+        }
+      }
+
+      initialized.current = true;
+    }
+  }, []);
+
   return (
     <Container>
       <Text fontSize={"2xl"}>Configuration Dashboard</Text>
 
       <form onSubmit={handleSubmit}>
-        <Button type="submit" colorScheme="teal" mt={2} mb={4}>
-          Submit
-        </Button>
+        <HStack mt={2} mb={4}>
+          <Button type="submit" colorScheme="teal">
+            Submit
+          </Button>
+
+          <Button>Clear Storage</Button>
+        </HStack>
 
         {Array.from({ length: NUMBER_OF_TEAMS }).map((_, i) => (
           <HStack key={i} padding={"2"}>
