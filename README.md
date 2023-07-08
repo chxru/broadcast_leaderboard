@@ -1,7 +1,7 @@
 # Broadcast Leaderboard
 
 Dead simple leaderboard which need two tabs to work.  
-`/` for leaderboard and `/config` to update score.
+`/` for leaderboard and `/#/config` to update score.
 
 Communicates between tabs using [BroadcastChannel](https://developer.mozilla.org/en-US/docs/Web/API/Broadcast_Channel_API)
 
