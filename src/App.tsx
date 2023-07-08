@@ -1,13 +1,18 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { bc } from "./broadcast";
+import { Container, Text } from "@chakra-ui/react";
+import { Message } from "./types";
 
 const App = () => {
   const initialized = useRef(false);
+  const [data, setData] = useState<Message>([]);
 
   useEffect(() => {
     if (!initialized.current) {
       bc.onmessage = (evt) => {
-        console.log(evt.data);
+        const res = evt.data as Message;
+        res.sort((a, b) => b.score - a.score);
+        setData(res);
       };
 
       bc.onmessageerror = (evt) => {
@@ -18,7 +23,17 @@ const App = () => {
     }
   }, []);
 
-  return <div>Main Page</div>;
+  return (
+    <Container>
+      <Text fontSize={"2xl"}>Leaderboard</Text>
+
+      {data.map(({ name, score }, i) => (
+        <Text key={i}>
+          {i + 1}. {name} - {score}
+        </Text>
+      ))}
+    </Container>
+  );
 };
 
 export default App;
