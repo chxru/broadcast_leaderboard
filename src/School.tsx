@@ -1,13 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  Box,
-  Card,
-  CardBody,
-  CardHeader,
-  Flex,
-  Image,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Flex, Image } from "@chakra-ui/react";
 import { Message } from "./types";
 import { onValue, ref } from "firebase/database";
 import { firebase_database } from "./firebase";
@@ -39,7 +31,7 @@ const App = () => {
     //     { name: "Team 10", score: 23, time: "3" },
     //     { name: "Team 11", score: 120, time: "5" },
     //     { name: "Team 12", score: 580, time: "4" },
-        
+
     //   ]
     // )
   }, []);
@@ -53,46 +45,43 @@ const App = () => {
 
         <Box w={"60%"}>
           <Box p={8}>
-          {/* <div id="header">
+            {/* <div id="header">
         <h1>LEADERBOARD</h1>
 
 
       </div> */}
-          <div id="leaderboard">
-        <div className="ribbon"></div>
-        <table>
-        {data2  
-              .sort((a, b) => b.score - a.score)
-              .map(({ name, score, time }, i) => (
-                
-                
-                <tr>
-            <td className="number">{i+1}</td>
-            <td className="name">{name}</td>
-            <td className="points">{score} - {time} m
-            {
-              i == 0 ? 
-              <img className="gold-medal" src="./assets/gold-medal.png"/>
-              : i == 1 ?
-              <img className="gold-medal" src="./assets/silver-medal.png"/>
-              : i == 2 ?
-              <img className="gold-medal" src="./assets/bronze-medal.png"/>
-              : null
-            }           
-            
-            </td> 
-          </tr>
-
-
-      
-              ))}
-   
-          
-        </table>
-
-      </div>
-
-     
+            <div id="leaderboard">
+              <div className="ribbon"></div>
+              <table>
+                {data2
+                  .sort((a, b) => b.score - a.score)
+                  .map(({ name, score, time }, i) => (
+                    <tr>
+                      <td className="number">{i + 1}</td>
+                      <td className="name">{name}</td>
+                      <td className="points">
+                        {score} - {time} m
+                        {i == 0 ? (
+                          <img
+                            className="gold-medal"
+                            src="./assets/gold-medal.png"
+                          />
+                        ) : i == 1 ? (
+                          <img
+                            className="gold-medal"
+                            src="./assets/silver-medal.png"
+                          />
+                        ) : i == 2 ? (
+                          <img
+                            className="gold-medal"
+                            src="./assets/bronze-medal.png"
+                          />
+                        ) : null}
+                      </td>
+                    </tr>
+                  ))}
+              </table>
+            </div>
           </Box>
         </Box>
       </Flex>
