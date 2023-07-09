@@ -6,6 +6,7 @@ import { RouterProvider, createHashRouter } from "react-router-dom";
 import App from "./App.tsx";
 import School from "./School.tsx";
 import Config from "./Config.tsx";
+import SchoolConfig from "./SchoolConfig.tsx";
 import "./index.css";
 
 const router = createHashRouter([
@@ -16,6 +17,10 @@ const router = createHashRouter([
   {
     path: "/school",
     element: <School />,
+  },
+  {
+    path: "/school/config",
+    element: <SchoolConfig />,
   },
   {
     path: "/config",
