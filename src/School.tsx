@@ -12,22 +12,22 @@ import { Message } from "./types";
 import { onValue, ref } from "firebase/database";
 import { firebase_database } from "./firebase";
 
-const dbRef = ref(firebase_database, "university");
+const dbRef = ref(firebase_database, "school");
 
 const App = () => {
   const initialized = useRef(false);
-  const [data, setData] = useState<Message>([]);
+  const [data2, setData2] = useState<Message>([]);
 
   useEffect(() => {
     if (!initialized.current) {
       onValue(dbRef, (snapshot) => {
         const data = snapshot.val() as Message;
         console.log(data);
-        setData(data);
+        setData2(data);
       });
     }
 
-    // setData(
+    // setData2(
     //   [
     //     { name: "Team 2", score: 258, time: "2" },
     //     { name: "Team 4", score: 22, time: "3" },
@@ -61,7 +61,7 @@ const App = () => {
           <div id="leaderboard">
         <div className="ribbon"></div>
         <table>
-        {data
+        {data2  
               .sort((a, b) => b.score - a.score)
               .map(({ name, score, time }, i) => (
                 
