@@ -1,5 +1,13 @@
 import { useEffect, useRef, useState } from "react";
-import { Container, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Card,
+  CardBody,
+  CardHeader,
+  Flex,
+  Image,
+  Text,
+} from "@chakra-ui/react";
 import { Message } from "./types";
 import { onValue, ref } from "firebase/database";
 import { firebase_database } from "./firebase";
@@ -21,15 +29,38 @@ const App = () => {
   }, []);
 
   return (
-    <Container>
-      <Text fontSize={"2xl"}>Leaderboard</Text>
+    <Box>
+      <Flex direction={"row"} h={"100vh"}>
+        <Flex w={"40%"} justify={"center"} align={"center"} bg={"black"}>
+          <Image src={"./xbotix.png"} alt={"logo"} />
+        </Flex>
 
-      {data.map(({ name, score, time }, i) => (
-        <Text key={i}>
-          {i + 1}. {name} - {score} - {time}
-        </Text>
-      ))}
-    </Container>
+        <Box w={"60%"}>
+          <Box p={8}>
+            {data
+              .sort((a, b) => b.score - a.score)
+              .map(({ name, score, time }, i) => (
+                <Card key={name} mb={4} w={"full"}>
+                  <CardHeader>
+                    <Flex justifyContent={"space-between"}>
+                      <Text fontSize={"2xl"}>
+                        {i + 1}. {name}
+                      </Text>
+                      <Text fontSize={"2xl"}>{score} pts.</Text>
+                    </Flex>
+                  </CardHeader>
+
+                  <CardBody mt={0} pt={0}>
+                    <Flex justifyContent={"end"}>
+                      <Text>{time}</Text>
+                    </Flex>
+                  </CardBody>
+                </Card>
+              ))}
+          </Box>
+        </Box>
+      </Flex>
+    </Box>
   );
 };
 
