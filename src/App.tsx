@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { bc } from "./broadcast";
 import { Container, Text } from "@chakra-ui/react";
 import { Message } from "./types";
+import { onValue, ref } from "firebase/database";
+import { firebase_database } from "./firebase";
+
+const dbRef = ref(firebase_database, "university");
 
 const App = () => {
   const initialized = useRef(false);
@@ -9,17 +12,11 @@ const App = () => {
 
   useEffect(() => {
     if (!initialized.current) {
-      bc.onmessage = (evt) => {
-        const res = evt.data as Message;
-        res.sort((a, b) => b.score - a.score);
-        setData(res);
-      };
-
-      bc.onmessageerror = (evt) => {
-        console.log(evt);
-      };
-
-      initialized.current = true;
+      onValue(dbRef, (snapshot) => {
+        const data = snapshot.val() as Message;
+        console.log(data);
+        setData(data);
+      });
     }
   }, []);
 
