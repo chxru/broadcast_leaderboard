@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Box, Flex, Image } from "@chakra-ui/react";
+import { Box, Flex, Image, Text } from "@chakra-ui/react";
 import { Message } from "./types";
 import { onValue, ref } from "firebase/database";
 import { firebase_database } from "./firebase";
@@ -32,34 +32,40 @@ const App = () => {
             <div id="leaderboard">
               {Array.isArray(data) && <div className="ribbon"></div>}
               <table>
-                {Array.isArray(data) &&
-                  data
-                    .sort((a, b) => b.score - a.score)
-                    .map(({ name, score, time }, i) => (
-                      <tr>
-                        <td className="number">{i + 1}</td>
-                        <td className="name">{name}</td>
-                        <td className="points">
-                          {score} - {time} m
-                          {i == 0 ? (
-                            <img
-                              className="gold-medal"
-                              src="./assets/gold-medal.png"
-                            />
-                          ) : i == 1 ? (
-                            <img
-                              className="gold-medal"
-                              src="./assets/silver-medal.png"
-                            />
-                          ) : i == 2 ? (
-                            <img
-                              className="gold-medal"
-                              src="./assets/bronze-medal.png"
-                            />
-                          ) : null}
-                        </td>
-                      </tr>
-                    ))}
+                <tbody>
+                  {Array.isArray(data) &&
+                    data
+                      .sort((a, b) => b.score - a.score)
+                      .map(({ name, score, time }, i) => (
+                        <tr key={name}>
+                          <td className="points">
+                            {i == 0 ? (
+                              <img
+                                className="gold-medal"
+                                src="./assets/gold-medal.png"
+                              />
+                            ) : i == 1 ? (
+                              <img
+                                className="gold-medal"
+                                src="./assets/silver-medal.png"
+                              />
+                            ) : i == 2 ? (
+                              <img
+                                className="gold-medal"
+                                src="./assets/bronze-medal.png"
+                              />
+                            ) : null}
+                            <Text>{score}</Text>
+                          </td>
+                          <td>
+                            <Text>{name}</Text>
+                          </td>
+                          <td>
+                            <Text>{time}</Text>
+                          </td>
+                        </tr>
+                      ))}
+                </tbody>
               </table>
             </div>
           </Box>
