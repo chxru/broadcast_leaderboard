@@ -151,7 +151,7 @@ const App = () => {
             Submit
           </Button>
 
-          <Button>Clear Storage</Button>
+          <Button type="reset">Clear Fields</Button>
         </HStack>
 
         {Array.from({ length: NUMBER_OF_TEAMS }).map((_, i) => (
