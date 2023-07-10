@@ -45,7 +45,7 @@ const App = () => {
     for (let i = 0; i < NUMBER_OF_TEAMS; i++) {
       const name = (evt.target as any)[`name_${i + 1}`].value;
       const time = (evt.target as any)[`time_${i + 1}`].value;
-      const score = parseInt((evt.target as any)[`score_${i + 1}`].value);
+      const score = parseFloat((evt.target as any)[`score_${i + 1}`].value);
 
       if (!name || !score) continue;
 
