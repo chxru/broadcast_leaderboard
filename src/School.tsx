@@ -39,8 +39,9 @@ const App = () => {
                       <tr>
                         <td className="number">{i + 1}</td>
                         <td className="name">{name}</td>
+                        <td className="name">{time}</td>
                         <td className="points">
-                          {score} - {time} m
+                          {score} points
                           {i == 0 ? (
                             <img
                               className="gold-medal"
