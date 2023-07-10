@@ -47,7 +47,7 @@ const App = () => {
       const time = (evt.target as any)[`time_${i + 1}`].value;
       const score = parseFloat((evt.target as any)[`score_${i + 1}`].value);
 
-      if (!name || !score) continue;
+      if (!name || score == undefined) continue;
 
       data.push({ name, score, time });
 
